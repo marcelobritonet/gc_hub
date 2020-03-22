@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,6 +11,7 @@ export default function App() {
   return (
       <Router>
         <div>
+          <Title>Titulo</Title>
           <nav>
             <ul>
               <li>
@@ -54,3 +56,6 @@ function Users() {
   return <h2>Users</h2>;
 }
 
+const Title = styled.div`
+    font-size: 20px
+`;
