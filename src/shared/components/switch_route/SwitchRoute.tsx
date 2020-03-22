@@ -1,7 +1,7 @@
 import {Route, Switch} from "react-router-dom";
-import Lideres from "../../../containers/group_lead/GroupLead";
-import ListaGrupos from "../../../containers/group_list/GroupList";
-import MyGroup from "../../../containers/my_group/MyGroup";
+import Lideres from "../../../containers/group-lead/GroupLead";
+import ListaGrupos from "../../../containers/group-list/GroupList";
+import MyGroup from "../../../containers/my-group/MyGroup";
 import Home from "../../../containers/home/Home";
 import React from "react";
 
