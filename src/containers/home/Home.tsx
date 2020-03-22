@@ -1,10 +1,14 @@
 import React from 'react';
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 
 function Home() {
     return (
-        <div>Home</div>
+        <div>
+            <h1>Título</h1>
+            <Link to="/meugrupo">Conhecer meu GC</Link>
+        </div>
     )
 }
 
