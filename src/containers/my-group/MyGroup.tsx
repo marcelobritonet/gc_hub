@@ -1,10 +1,14 @@
 import React from 'react';
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import Maps from "../../shared/components/maps/Maps";
 
 function MyGroup() {
     return (
-        <div>Meu Grupo</div>
+        <div>
+            <h2>Meu Grupo</h2>
+            <Maps/>
+        </div>
     )
 }
 

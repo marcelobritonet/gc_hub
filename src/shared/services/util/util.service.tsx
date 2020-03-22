@@ -1,14 +1,15 @@
-// function serialize(obj = {}): string {
-//     const str = [];
-//
-//     for (const p in obj) {
-//         if (obj.hasOwnProperty(p)) {
-//             str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
-//         }
-//     }
-//
-//     return str.join('&');
-// }
+const serialize = (obj: any = {}) => {
+    const str = [];
+
+    for (const p in obj) {
+        if (obj.hasOwnProperty(p)) {
+            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+        }
+    }
+
+    return str.join('&');
+};
+
 //
 // function paramsToObject(params): object {
 //     const urlParams = new URLSearchParams(params);
@@ -70,8 +71,8 @@
 //     return match ? match.length > 0 && match[0] : undefined;
 // }
 
-export default {
-    // serialize,
+export {
+    serialize,
     // paramsToObject,
     // cleanEmptyPropetiesFromObjects,
     // extractHtmlTags,
