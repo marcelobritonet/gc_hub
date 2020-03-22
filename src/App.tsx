@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import {
   BrowserRouter as Router,
@@ -6,12 +6,35 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { clickButton } from './actions';
 
-export default function App() {
+function App(props: any) {
+  const [inputValue, setInputValue] = useState()
+
+  const inputChange = (event: any) => {
+    setInputValue(event.target.value);
+  };
+
+  const { newValue, clickButton } = props;
+
   return (
       <Router>
         <div>
-          <Title>Titulo</Title>
+          <Title>{newValue}</Title>
+
+
+          <input
+              onChange={inputChange}
+              type='text'
+              value={inputValue}
+          />
+
+          <button onClick={() => clickButton(inputValue)}>
+            Click me!
+          </button>
+
           <nav>
             <ul>
               <li>
@@ -59,3 +82,12 @@ function Users() {
 const Title = styled.div`
     font-size: 20px
 `;
+
+const mapDispatchToProps = (dispatch: any) =>
+    bindActionCreators({ clickButton }, dispatch);
+
+const mapStateToProps = (store: any) => ({
+  newValue: store.clickState.newValue
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
