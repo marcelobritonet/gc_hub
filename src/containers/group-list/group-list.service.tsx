@@ -1,14 +1,11 @@
-export interface IGroupeLead {
-    nome: string;
-    telefone: string;
-}
+import {IGroup} from "./group-list.models";
 
-const getGroupLeadList = async () => {
-    const response: Response = await fetch('./data/lideres.json');
-    const data: IGroupeLead[] = await response.json();
+const getGroupList = async () => {
+    const response: Response = await fetch('./data/grupos.json');
+    const data: IGroup[] = await response.json();
     return data;
 };
 
 export {
-    getGroupLeadList
+    getGroupList
 }

@@ -1,29 +1,30 @@
 import React, {useEffect, useState} from 'react';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {getGroupLeadList, IGroupeLead} from './group-list.service';
+import {IGroup} from "./group-list.models";
+import {getGroupList} from "./group-list.service";
 
 function GroupList() {
-    const [leadGroupList, setLeadGroupList] = useState<IGroupeLead[] | undefined>(undefined);
+    const [groupList, setGroupList] = useState<IGroup[] | undefined>(undefined);
 
     useEffect(() => {
-        getList();
+        initGroupList();
     }, []);
 
-    const getList = async () => {
-        const list: IGroupeLead[] = await getGroupLeadList();
-        setLeadGroupList(list)
+    const initGroupList = async () => {
+        const list: IGroup[] = await getGroupList();
+        setGroupList(list)
     };
 
     return (
         <div>
-            <h2>Líderes</h2>
+            <h2>Grupos de Crescimento</h2>
             <ul>
                 {
-                    leadGroupList && leadGroupList.map((list: IGroupeLead, index: number) =>
+                    groupList && groupList.map((list: IGroup, index: number) =>
                         <li key={index}>
                             <p>{list.nome}</p>
-                            <p>{list.telefone}</p>
+                            <p>{list.endereco}</p>
                         </li>
                     )
                 }
