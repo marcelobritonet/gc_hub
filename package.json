@@ -28,7 +28,9 @@
     "eject": "react-scripts eject",
     "commit": "npx git-cz",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "preserve": "yarn build",
+    "serve": "serve -s build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -53,6 +55,7 @@
   "devDependencies": {
     "gh-pages": "^2.2.0",
     "react-redux": "^7.2.0",
+    "serve": "^11.3.0",
     "typescript-plugin-styled-components": "^1.4.4"
   }
 }
