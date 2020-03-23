@@ -1,31 +1,28 @@
 import {serialize} from "../util/util.service";
+import {
+    IDistanceMatrixParametres,
+    IDistanceMatrixParametresRequest,
+    IDistanceMatrixResponse
+} from "./google-maps-plataform.models";
+import {getGroupList} from "../../../containers/group-list/group-list.service";
+import {IGroup} from "../../../containers/group-list/group-list.models";
 
-const GOOGLE_MAPS_PLATAFORM_API_KEY = 'AIzaSyAt3lE0_ahSc9Bd5GOvtKG52NIEnzgVBmw';
+const GOOGLE_MAPS_PLATAFORM_API_KEY = 'AIzaSyC2IdkXtXRKxKhQVBBw-XyKA_PazKAo1Js';
+const PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
 
-interface IDistanceMatrixParametres {
-    origins: string;
-    destinations: string;
-    key: string;
-    mode?: 'driving' | 'walking' | 'bicycling' | 'transit';
-    units?: 'metric' | 'imperial',
-    transit_mode?: 'bus' | 'subway' | 'train' | 'tram' | 'rail'
-}
-
-const getDistanceMatrix = async () => {
-    const origins: string = 'Rua Iguaba Grande, 78';
-    const destinations: string = 'Avenida das Américas, 500';
-    const distanceMatrixParametres: IDistanceMatrixParametres = {
-        origins,
-        destinations,
-        key: GOOGLE_MAPS_PLATAFORM_API_KEY,
-        mode: 'driving',
-        units: 'metric',
-        transit_mode: 'bus'
+const getDistanceMatrix = async (params: IDistanceMatrixParametres) => {
+    const groups: IGroup[] = await getGroupList();
+    const address: string[] = groups.map(group => group.endereco);
+    const destinations: string = `&destinations=${address.join('|').replace(/ /g, '+')}`;
+    const origins: string = `&origins=${params.origins.join('|').replace(/ /g, '+')}`;
+    const requestParams: IDistanceMatrixParametresRequest = {
+        ...params,
+        key: GOOGLE_MAPS_PLATAFORM_API_KEY
     };
-    const parameters = serialize(distanceMatrixParametres);
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?${parameters}`;
-    const response = await fetch(url);debugger
-    const data = await response.json();
+    const queryString: string = serialize(requestParams);
+    const url: string = `${PROXY_URL}https://maps.googleapis.com/maps/api/distancematrix/json?${queryString}${origins}${destinations}`;
+    const response: Response = await fetch(url);
+    const data: IDistanceMatrixResponse = await response.json();
     return data;
 };
 
