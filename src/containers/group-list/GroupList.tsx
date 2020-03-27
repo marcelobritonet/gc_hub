@@ -5,7 +5,7 @@ import {IGroup} from "./group-list.models";
 import {getGroupList} from "./group-list.service";
 
 function GroupList() {
-    const [groupList, setGroupList] = useState<IGroup[] | undefined>(undefined);
+    const [groupList, setGroupList] = useState<IGroup[] | undefined>();
 
     useEffect(() => {
         initGroupList();
@@ -23,8 +23,8 @@ function GroupList() {
                 {
                     groupList && groupList.map((list: IGroup, index: number) =>
                         <li key={index}>
-                            <p>{list.nome}</p>
-                            <p>{list.endereco}</p>
+                            <p>{list.name}</p>
+                            <p>{list.address}</p>
                         </li>
                     )
                 }

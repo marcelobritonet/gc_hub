@@ -1,32 +1,30 @@
-import {serialize} from "../util/util.service";
 import {
-    IDistanceMatrixParametres,
-    IDistanceMatrixParametresRequest,
+    IDistanceMatrix,
     IDistanceMatrixResponse
 } from "./google-maps-plataform.models";
-import {getGroupList} from "../../../containers/group-list/group-list.service";
-import {IGroup} from "../../../containers/group-list/group-list.models";
 
-const GOOGLE_MAPS_PLATAFORM_API_KEY = 'AIzaSyC2IdkXtXRKxKhQVBBw-XyKA_PazKAo1Js';
-const PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
+const buildDistanceList = (list: IDistanceMatrixResponse): IDistanceMatrix[] => {
+    return list.destination_addresses.map((address: string, index: number) => {
+        const element = list.rows[0].elements[index];
 
-const getDistanceMatrix = async (params: IDistanceMatrixParametres) => {
-    const groups: IGroup[] = await getGroupList();
-    const address: string[] = groups.map(group => group.endereco);
-    const destinations: string = `&destinations=${address.join('|').replace(/ /g, '+')}`;
-    const origins: string = `&origins=${params.origins.join('|').replace(/ /g, '+')}`;
-    const requestParams: IDistanceMatrixParametresRequest = {
-        ...params,
-        key: GOOGLE_MAPS_PLATAFORM_API_KEY
-    };
-    const queryString: string = serialize(requestParams);
-    const url: string = `${PROXY_URL}https://maps.googleapis.com/maps/api/distancematrix/json?${queryString}${origins}${destinations}`;
-    const response: Response = await fetch(url);
-    const data: IDistanceMatrixResponse = await response.json();
-    return data;
+        return {
+            address: address,
+            distance: element.distance,
+            duration: element.duration
+        }
+    })
 };
 
+const orderDistanceListByDistance = (list: IDistanceMatrix[]): IDistanceMatrix[] =>
+    list.sort((a: IDistanceMatrix, b: IDistanceMatrix) =>
+        a.distance.value - b.distance.value);
+
+const orderDistanceListByDuration = (list: IDistanceMatrix[]): IDistanceMatrix[] =>
+    list.sort((a: IDistanceMatrix, b: IDistanceMatrix) =>
+        a.duration.value - b.duration.value);
+
 export {
-    GOOGLE_MAPS_PLATAFORM_API_KEY,
-    getDistanceMatrix
+    buildDistanceList,
+    orderDistanceListByDistance,
+    orderDistanceListByDuration
 }

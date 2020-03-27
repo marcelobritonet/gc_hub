@@ -15,7 +15,7 @@ function Navigation() {
                     <Link to="/grupos">Grupos de Crescimento</Link>
                 </li>
                 <li>
-                    <Link to="/meugrupo">Meu Grupo</Link>
+                    <Link to="/meugrupo">Conhecer meu Grupo</Link>
                 </li>
             </ul>
         </nav>

@@ -18,6 +18,13 @@ export interface ITraficMode {
 export interface ITransitMode {
     transit_mode: 'bus' | 'subway' | 'train' | 'tram' | 'rail'
 }
+
+export interface IDistanceMatrix {
+    address: string;
+    distance: Distance;
+    duration: Distance;
+}
+
 export interface IDistanceMatrixResponse {
     destination_addresses: string[];
     origin_addresses: string[];
