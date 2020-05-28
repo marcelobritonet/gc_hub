@@ -1,7 +1,8 @@
 import React, {useEffect, useRef, useState} from "react";
 import {
     orderDistanceListByDistance,
-    orderDistanceListByDuration, orderDistanceListByFare
+    orderDistanceListByDuration,
+    orderDistanceListByFare
 } from '../../services/google-maps-plataform/google-maps-plataform.service';
 import {ITraficModeOptions, ITransitModeOptions} from "./maps.models";
 import {traficModes, transitModes} from "./maps.service";
