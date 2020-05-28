@@ -1,10 +1,11 @@
 [
   {
-    "nome": "Barra Village",
-    "endereco": "Avenida César Morani, 500"
-  },
-  {
-    "nome": "Posto 6",
-    "endereco": "Avenida Lucio Costa"
+    "name": "Barra Village",
+    "groupTypeId": 1,
+    "address": "Avenida César Morani, 500"
+  }, {
+    "name": "Posto 6",
+    "groupTypeId": 1,
+    "address": "Avenida Lucio Costa, 4350"
   }
 ]
