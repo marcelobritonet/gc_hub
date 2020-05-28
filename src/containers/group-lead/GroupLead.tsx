@@ -1,36 +1,32 @@
-import React, {useEffect, useState} from 'react';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {getGroupLeadList} from "./group-lead.service";
-import {IGroupLead} from "./group-lead.models";
+import React, {useEffect, useState} from "react";
+import {useParams, Redirect, Link} from "react-router-dom"
+import {IGroupLead} from "../../shared/services/group/group.models";
+import {getLead} from "../../shared/services/group/group.service";
 
 function GroupLead() {
-    const [leadGroupList, setLeadGroupList] = useState<IGroupLead[] | undefined>(undefined);
+    const [lead, setLead] = useState<IGroupLead>()
+    const { alias } = useParams();
 
-    useEffect(() => {
-        initGroupLeadList();
-    }, []);
+    useEffect(()=> {
+        alias && initGroupLeadList(alias);
+    }, [])
 
-    const initGroupLeadList = async () => {
-        const list: IGroupLead[] = await getGroupLeadList();
-        setLeadGroupList(list)
+    const initGroupLeadList = async (alias: string) => {
+        const lead: IGroupLead | undefined = await getLead(alias);
+        setLead(lead);
     };
 
-    return (
-        <div>
-            <h2>Líderes</h2>
-            <ul>
-                {
-                    leadGroupList && leadGroupList.map((list: IGroupLead, index: number) =>
-                        <li key={index}>
-                            <p>{list.nome}</p>
-                            <p>{list.telefone}</p>
-                        </li>
-                    )
-                }
-            </ul>
-        </div>
-    )
+    return <div>
+        { lead &&
+            <div>
+                <p>{lead.nome}</p>
+                <p>{lead.telefone}</p>
+            </div>
+        }
+        <Link to="/lideres">Voltar</Link>
+    </div>
 }
 
 const mapDispatchToProps = (dispatch: any) =>

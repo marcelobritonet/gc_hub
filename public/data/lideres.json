@@ -1,18 +1,22 @@
 [
   {
     "nome": "Léo Assimos",
-    "telefone": "9700 0000"
+    "telefone": "9700 0000",
+    "alias": "leo"
   },
   {
     "nome": "Monique Assimos",
-    "telefone": "9700 0000"
+    "telefone": "9700 0000",
+    "alias": "monique"
   },
   {
-    "nome": "Luise Loureiro",
-    "telefone": "9700 0000"
+    "nome": "Louise Loureiro",
+    "telefone": "9700 0000",
+    "alias": "louise"
   },
   {
     "nome": "Daniel Alencar",
-    "telefone": "9700 0000"
+    "telefone": "9700 0000",
+    "alias": "daniel"
   }
 ]

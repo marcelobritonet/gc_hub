@@ -6,8 +6,9 @@ import {Link} from "react-router-dom";
 function Home() {
     return (
         <div>
-            <h2>Quero conhecer meu GC</h2>
-            <Link to="/meugrupo">Conhecer</Link>
+            <h2>Grupo de Crescimento</h2>
+            <p>Seja bem vindo. Conheça o seu Grupo de Conhecimento personalizado pra você.</p>
+            <Link to="/meugrupo">Quero conhecer agora</Link>
         </div>
     )
 }
