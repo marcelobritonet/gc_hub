@@ -3,16 +3,25 @@ import {
     IDistanceMatrixResponse
 } from "./google-maps-plataform.models";
 
-function buildDistanceList(list: IDistanceMatrixResponse): IDistanceMatrix[] {
-    return list.destination_addresses.map((address: string, index: number) => {
-        const element = list.rows[0].elements[index];
+function buildDistanceList(list: IDistanceMatrixResponse, destinations: string[]): IDistanceMatrix[] {
+    return list.destination_addresses
+        .map((address: string, index: number): IDistanceMatrix => {
+            const { distance, duration, fare, status } = list.rows[0].elements[index];
 
-        return {
-            address: address,
-            distance: element.distance,
-            duration: element.duration
-        }
-    })
+            return {
+                fullAddress: address,
+                address: destinations[index],
+                distance,
+                duration,
+                fare,
+                status
+            }
+        })
+        .filter((address: IDistanceMatrix) =>
+            address.status === 'OK'
+            && address.distance
+            && address.duration
+        )
 }
 
 function orderDistanceListByDistance(list: IDistanceMatrix[]): IDistanceMatrix[] {
@@ -25,8 +34,14 @@ function orderDistanceListByDuration(list: IDistanceMatrix[]): IDistanceMatrix[]
         a.duration.value - b.duration.value);
 }
 
+function orderDistanceListByFare(list: IDistanceMatrix[]): IDistanceMatrix[] {
+    return list.sort((a: IDistanceMatrix, b: IDistanceMatrix) =>
+        a.fare.value - b.fare.value);
+}
+
 export {
     buildDistanceList,
     orderDistanceListByDistance,
-    orderDistanceListByDuration
+    orderDistanceListByDuration,
+    orderDistanceListByFare
 }

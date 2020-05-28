@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {
     orderDistanceListByDistance,
-    orderDistanceListByDuration
+    orderDistanceListByDuration, orderDistanceListByFare
 } from '../../services/google-maps-plataform/google-maps-plataform.service';
 import {ITraficModeOptions, ITransitModeOptions} from "./maps.models";
 import {traficModes, transitModes} from "./maps.service";
@@ -24,10 +24,14 @@ function Maps() {
     const [address, setAddress] = useState<IAddress | undefined>();
     const [traficMode, setTraficMode] = useState<ITraficMode>();
     const [transitMode, setTransitMode] = useState<ITransitMode>();
-    const [sortBy, setSortBy] = useState<'nearest' | 'faster' | undefined>();
+    const [sortBy, setSortBy] = useState<'nearest' | 'faster' | 'cheap' | undefined>();
     const [distance, setDistance] = useState<IDistanceMatrix[] | undefined>();
+    const [loading, setLoading] = useState<boolean>(false)
 
     const getDistance = async () => {
+        setDistance(undefined);
+        setLoading(true);
+
         const params: IDistanceMatrixParametres = {
             origins: [originCep],
             mode: traficMode,
@@ -43,9 +47,14 @@ function Maps() {
             case 'nearest':
                 setDistance(orderDistanceListByDistance(addressList));
                 break;
+            case 'cheap':
+                setDistance(orderDistanceListByFare(addressList));
+                break;
             default:
                 setDistance(orderDistanceListByDistance(addressList));
         }
+
+        setLoading(false);
     };
 
     const getAddress = async (cep: string) => {
@@ -95,6 +104,7 @@ function Maps() {
             <input type="text"
                    ref={originCepInput}
                    onKeyUp={handleOriginCep}
+                   disabled={loading}
             />
         </label>
 
@@ -110,12 +120,14 @@ function Maps() {
                 </div>
         }
 
+        <br/>
 
         <label>
             Pretendo ir:
             <select name="" id=""
                     ref={traficModeSelect}
                     onChange={handleTraficMode}
+                    disabled={loading}
             >
                 {
                     traficModes.map((mode: ITraficModeOptions, index: number) =>
@@ -136,6 +148,7 @@ function Maps() {
                 <select name="" id=""
                         ref={transitModeSelect}
                         onChange={handelTransitMode}
+                        disabled={loading}
                 >
                     {
                         transitModes.map((mode: ITransitModeOptions, index: number) =>
@@ -153,13 +166,25 @@ function Maps() {
 
         <button
             onClick={() => setSortBy('nearest')}
-            disabled={!originCep}
-        >O mais próximo próximo de mim</button>
+            disabled={!originCep || loading}
+        >Encontre o mais próximo próximo</button>
+
+        <br/>
 
         <button
             onClick={() => setSortBy('faster')}
-            disabled={!originCep}
-        >O mais rápido para chegar</button>
+            disabled={!originCep || loading}
+        >Encontre o mais rápido para chegar</button>
+
+        <br/>
+
+        {
+            transitMode &&
+            <button
+                onClick={() => setSortBy('cheap')}
+                disabled={!originCep || loading}
+            >O mais barato</button>
+        }
 
         <ul>
             {
@@ -168,6 +193,7 @@ function Maps() {
                         <p>{ item.address }</p>
                         <p>{ item.distance.text }</p>
                         <p>{ item.duration.text }</p>
+                        <p>{ item.fare?.text}</p>
                     </li>
                 )
             }

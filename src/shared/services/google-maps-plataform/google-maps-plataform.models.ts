@@ -20,16 +20,19 @@ export interface ITransitMode {
 }
 
 export interface IDistanceMatrix {
+    fullAddress: string;
     address: string;
     distance: Distance;
     duration: Distance;
+    fare: Fare;
+    status: string;
 }
 
 export interface IDistanceMatrixResponse {
     destination_addresses: string[];
     origin_addresses: string[];
     rows: Row[];
-    status: string;
+    status: 'OK' | 'ZERO_RESULTS' | 'NOT_FOUND'
 }
 
 interface Row {
@@ -40,9 +43,16 @@ interface Element {
     distance: Distance;
     duration: Distance;
     status: string;
+    fare: Fare;
 }
 
 interface Distance {
+    text: string;
+    value: number;
+}
+
+interface Fare {
+    currency: string;
     text: string;
     value: number;
 }

@@ -5,19 +5,20 @@ import {
     IDistanceMatrixResponse
 } from "./google-maps-plataform.models";
 import {GOOGLE_MAPS_PLATAFORM_API_KEY, PROXY_URL} from "./google-maps-plataform.constants";
-import {serialize} from "../util/util.service";
+import {cleanEmptyPropetiesFromObjects, serialize} from "../util/util.service";
 import {buildDistanceList} from "./google-maps-plataform.service";
 import {IGroup} from "../group/group.models";
 import {getGroupList} from "../group/group.service";
 
 //https://developers.google.com/maps/documentation/distance-matrix/intro?hl=pt-br
-async function getDistanceMatrix(params: IDistanceMatrixParametres): Promise<IDistanceMatrix[]> {
+async function getDistanceMatrix(distanceParams: IDistanceMatrixParametres): Promise<IDistanceMatrix[]> {
+    const params:IDistanceMatrixParametres = cleanEmptyPropetiesFromObjects(distanceParams)
     const address: string[] = await getDestinationAddress();
-    const destinations = buildUrlDestinationParams(address);
-    const origins = buildUrlOriginsParams(params);
-    const queryString = buildUrlQueryString(params, GOOGLE_MAPS_PLATAFORM_API_KEY);
+    const destinations: string = buildUrlDestinationParams(address);
+    const origins: string = buildUrlOriginsParams(params);
+    const queryString: string = buildUrlQueryString(params, GOOGLE_MAPS_PLATAFORM_API_KEY);
     const url: string = `${PROXY_URL}https://maps.googleapis.com/maps/api/distancematrix/json?${queryString}${origins}${destinations}`;
-    return await fetchDistanceMatrix(url);
+    return await fetchDistanceMatrix(url, address);
 }
 
 async function getDestinationAddress(): Promise<string[]> {
@@ -43,10 +44,10 @@ function buildUrlQueryString(params: IDistanceMatrixParametres, key: string): st
     return serialize(requestParams);
 }
 
-async function fetchDistanceMatrix(url: string): Promise<IDistanceMatrix[]> {
+async function fetchDistanceMatrix(url: string, destinations: string[]): Promise<IDistanceMatrix[]> {
     const response: Response = await fetch(url);
     const data: IDistanceMatrixResponse = await response.json();
-    return buildDistanceList(data);
+    return buildDistanceList(data, destinations);
 }
 
 export {

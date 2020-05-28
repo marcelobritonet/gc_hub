@@ -1,7 +1,7 @@
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import React, {useEffect, useState} from "react";
-import {useParams, Redirect, Link} from "react-router-dom"
+import {useParams, Link} from "react-router-dom"
 import {IGroupLead} from "../../shared/services/group/group.models";
 import {getLead} from "../../shared/services/group/group.service";
 

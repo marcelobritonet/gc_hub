@@ -23,9 +23,9 @@ const serialize = (obj: any = {}) => {
 //     return result;
 // }
 //
-// function cleanEmptyPropetiesFromObjects(obj) {
-//     return JSON.parse(JSON.stringify(obj));
-// }
+function cleanEmptyPropetiesFromObjects(obj: any) {
+    return JSON.parse(JSON.stringify(obj));
+}
 //
 // function extractHtmlTags(html): string {
 //     const el: HTMLElement = document.createElement('div');
@@ -74,7 +74,7 @@ const serialize = (obj: any = {}) => {
 export {
     serialize,
     // paramsToObject,
-    // cleanEmptyPropetiesFromObjects,
+    cleanEmptyPropetiesFromObjects,
     // extractHtmlTags,
     // decodeEntities,
     // getMimeType,
