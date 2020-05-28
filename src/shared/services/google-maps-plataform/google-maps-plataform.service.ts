@@ -3,7 +3,7 @@ import {
     IDistanceMatrixResponse
 } from "./google-maps-plataform.models";
 
-const buildDistanceList = (list: IDistanceMatrixResponse): IDistanceMatrix[] => {
+function buildDistanceList(list: IDistanceMatrixResponse): IDistanceMatrix[] {
     return list.destination_addresses.map((address: string, index: number) => {
         const element = list.rows[0].elements[index];
 
@@ -13,15 +13,17 @@ const buildDistanceList = (list: IDistanceMatrixResponse): IDistanceMatrix[] => 
             duration: element.duration
         }
     })
-};
+}
 
-const orderDistanceListByDistance = (list: IDistanceMatrix[]): IDistanceMatrix[] =>
-    list.sort((a: IDistanceMatrix, b: IDistanceMatrix) =>
+function orderDistanceListByDistance(list: IDistanceMatrix[]): IDistanceMatrix[] {
+    return list.sort((a: IDistanceMatrix, b: IDistanceMatrix) =>
         a.distance.value - b.distance.value);
+}
 
-const orderDistanceListByDuration = (list: IDistanceMatrix[]): IDistanceMatrix[] =>
-    list.sort((a: IDistanceMatrix, b: IDistanceMatrix) =>
+function orderDistanceListByDuration(list: IDistanceMatrix[]): IDistanceMatrix[] {
+    return list.sort((a: IDistanceMatrix, b: IDistanceMatrix) =>
         a.duration.value - b.duration.value);
+}
 
 export {
     buildDistanceList,

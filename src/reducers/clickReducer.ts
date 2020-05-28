@@ -2,7 +2,7 @@ import { CLICK_UPDATE_VALUE } from '../actions/actionTypes';
 const initialState = {
     newValue: 'Atualizado via Redux!'
 };
-export const clickReducer = (state = initialState, action: { type: any; newValue: any; }) => {
+function clickReducer(state = initialState, action: { type: any; newValue: any; }) {
     switch (action.type) {
         case CLICK_UPDATE_VALUE:
             return {
@@ -12,4 +12,8 @@ export const clickReducer = (state = initialState, action: { type: any; newValue
         default:
             return state;
     }
-};
+}
+
+export {
+    clickReducer
+}

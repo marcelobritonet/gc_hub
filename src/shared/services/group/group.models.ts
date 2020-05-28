@@ -1,3 +1,9 @@
+export interface IGroupLead {
+    nome: string;
+    telefone: string;
+    alias: string;
+}
+
 export interface IGroup {
     name: string;
     groupName: string;
