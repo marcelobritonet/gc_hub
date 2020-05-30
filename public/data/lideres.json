@@ -1,22 +1,57 @@
 [
   {
-    "nome": "Léo Assimos",
-    "telefone": "9700 0000",
-    "alias": "leo"
+    "nome": "João",
+    "alias": "joao",
+    "phone": "99547-3107"
   },
   {
-    "nome": "Monique Assimos",
-    "telefone": "9700 0000",
-    "alias": "monique"
+    "nome": "Cibele",
+    "alias": "cibele",
+    "phone": "99817-5940"
   },
   {
-    "nome": "Louise Loureiro",
-    "telefone": "9700 0000",
-    "alias": "louise"
+    "nome": "Israel",
+    "alias": "israel",
+    "phone": "99986-9098"
   },
   {
-    "nome": "Daniel Alencar",
-    "telefone": "9700 0000",
-    "alias": "daniel"
+    "nome": "Íris",
+    "alias": "iris",
+    "phone": "96923-5738"
+  },
+  {
+    "nome": "Mylene",
+    "alias": "mylene",
+    "phone": "98236-1584"
+  },
+  {
+    "nome": "Jéssica",
+    "alias": "jessica",
+    "phone": "96016-5052"
+  },
+  {
+    "nome": "Eduardo",
+    "alias": "eduardo",
+    "phone": "99771-3201"
+  },
+  {
+    "nome": "Ricardo",
+    "alias": "ricardo",
+    "phone": "98832-7263"
+  },
+  {
+    "nome": "Flávia",
+    "alias": "flavia",
+    "phone": "98621-0754"
+  },
+  {
+    "nome": "Daniel",
+    "alias": "daniel",
+    "phone": "97913-8934"
+  },
+  {
+    "nome": "Louise",
+    "alias": "louise",
+    "phone": "97148-9763"
   }
 ]

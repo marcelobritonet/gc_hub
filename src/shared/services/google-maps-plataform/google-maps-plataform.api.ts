@@ -11,7 +11,7 @@ import {IGroup} from "../group/group.models";
 import {getGroupList} from "../group/group.service";
 
 //https://developers.google.com/maps/documentation/distance-matrix/intro?hl=pt-br
-async function getDistanceMatrix(distanceParams: IDistanceMatrixParametres): Promise<IDistanceMatrix[]> {
+async function getDistanceMatrix(distanceParams: IDistanceMatrixParametres): Promise<IDistanceMatrix[] | []> {
     const params:IDistanceMatrixParametres = cleanEmptyPropetiesFromObjects(distanceParams)
     const address: string[] = await getDestinationAddress();
     const destinations: string = buildUrlDestinationParams(address);
@@ -44,7 +44,7 @@ function buildUrlQueryString(params: IDistanceMatrixParametres, key: string): st
     return serialize(requestParams);
 }
 
-async function fetchDistanceMatrix(url: string, destinations: string[]): Promise<IDistanceMatrix[]> {
+async function fetchDistanceMatrix(url: string, destinations: string[]): Promise<IDistanceMatrix[] | []> {
     const response: Response = await fetch(url);
     const data: IDistanceMatrixResponse = await response.json();
     return buildDistanceList(data, destinations);

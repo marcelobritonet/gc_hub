@@ -22,7 +22,7 @@ function GroupLead() {
         { lead &&
             <div>
                 <p>{lead.nome}</p>
-                <p>{lead.telefone}</p>
+                <p>{lead.phone}</p>
             </div>
         }
         <Link to="/lideres">Voltar</Link>

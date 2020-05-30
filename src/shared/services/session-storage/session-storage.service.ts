@@ -1,9 +1,9 @@
 function set(key: string, data: any) {
-    localStorage.setItem(key, JSON.stringify(data));
+    sessionStorage.setItem(key, JSON.stringify(data));
 }
 
 function get(key: string): any {
-    const item = localStorage.getItem(key);
+    const item = sessionStorage.getItem(key);
     return item ? JSON.parse(item): undefined;
 }
 

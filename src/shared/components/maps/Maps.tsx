@@ -15,6 +15,7 @@ import {CEP_REGEX} from "../../constants/constants";
 import {getDistanceMatrix} from "../../services/google-maps-plataform/google-maps-plataform.api";
 import {getAddessByCep} from "../../services/viacep/viacep.api";
 import {IAddress} from "../../services/viacep/viacep.models";
+import MapDistanceList from "../map-distance-list/MapDistanceList";
 
 function Maps() {
     const traficModeSelect = useRef(null);
@@ -26,7 +27,7 @@ function Maps() {
     const [traficMode, setTraficMode] = useState<ITraficMode>();
     const [transitMode, setTransitMode] = useState<ITransitMode>();
     const [sortBy, setSortBy] = useState<'nearest' | 'faster' | 'cheap' | undefined>();
-    const [distance, setDistance] = useState<IDistanceMatrix[] | undefined>();
+    const [distance, setDistance] = useState<IDistanceMatrix[] | []>(); // TODO: Na ausencia de lista é melhor false, undefined ou []?
     const [loading, setLoading] = useState<boolean>(false)
 
     const getDistance = async () => {
@@ -39,7 +40,7 @@ function Maps() {
             transit_mode: transitMode
         };
 
-        const addressList: IDistanceMatrix[] = await getDistanceMatrix(params);
+        const addressList: IDistanceMatrix[] | [] = await getDistanceMatrix(params);
 
         switch (sortBy) {
             case 'faster':
@@ -187,19 +188,9 @@ function Maps() {
             >O mais barato</button>
         }
 
-        <ul>
-            {
-                distance && distance.map((item: IDistanceMatrix, index: number) =>
-                    <li key={index}>
-                        <p>{ item.address }</p>
-                        <p>{ item.distance.text }</p>
-                        <p>{ item.duration.text }</p>
-                        <p>{ item.fare?.text}</p>
-                    </li>
-                )
-            }
-        </ul>
+        <MapDistanceList distance={distance}/>
     </div>
 }
+
 
 export default Maps;

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {IGroup} from "../../shared/services/group/group.models";
+import {IGroup, IGroupLead} from "../../shared/services/group/group.models";
 import {getGroupList} from "../../shared/services/group/group.service";
 
 function GroupList() {
@@ -23,8 +23,13 @@ function GroupList() {
                 {
                     groupList && groupList.map((list: IGroup, index: number) =>
                         <li key={index}>
-                            <p>{list.name}</p>
+                            <p>{list.name} - {list.groupName}</p>
                             <p>{list.address}</p>
+                            <p>{ list.complement }</p>
+                            { list.teamLead.map((lead: IGroupLead, index: number) =>
+                                <p key={index}>{ lead.alias } / { lead.nome } / { lead.phone }</p>
+                            )}
+                            <p>{ list.data }</p>
                         </li>
                     )
                 }

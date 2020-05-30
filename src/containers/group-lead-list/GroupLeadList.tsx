@@ -25,7 +25,7 @@ function GroupLeadList() {
                     leadGroupList && leadGroupList.map((list: IGroupLead, index: number) =>
                         <li key={index}>
                             <Link to={`lider/${list.alias}`}>{list.nome}</Link>
-                            <p>{list.telefone}</p>
+                            <p>{list.phone}</p>
                         </li>
                     )
                 }

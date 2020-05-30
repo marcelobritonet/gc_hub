@@ -1,11 +1,85 @@
 [
   {
-    "name": "Barra Village",
+    "name": "Recreio",
     "groupTypeId": 1,
-    "address": "Avenida César Morani, 500"
-  }, {
+    "address": "Estrada Benvindo de Novaes, 2800",
+    "lideres": [
+      "joao",
+      "cibele"
+    ],
+    "data": {
+      "dia": 6,
+      "hora": "20h00"
+    },
+    "complement": "Garage Band"
+  },
+  {
     "name": "Posto 6",
     "groupTypeId": 1,
-    "address": "Avenida Lucio Costa, 4350"
+    "address": "Avenida Lúcio Costa, 4420",
+    "lideres": [
+      "israel"
+    ],
+    "data": {
+      "dia": 6,
+      "hora": "20h30"
+    },
+    "complement": "Condomínio Village Oceanique"
+  },
+  {
+    "name": "Leblon",
+    "groupTypeId": 1,
+    "address": "Rua Humberto de Campos, 410 - Leblon",
+    "lideres": [
+      "iris",
+      "mylene"
+    ],
+    "data": {
+      "dia": 3,
+      "hora": "20h00"
+    },
+    "complement": ""
+  },
+  {
+    "name": "Taquara",
+    "groupTypeId": 1,
+    "address": "Rua Marapendi, 660",
+    "lideres": [
+      "jessica",
+      "eduardo"
+    ],
+    "data": {
+      "dia": 4,
+      "hora": "20h00"
+    },
+    "complement": "Condomínio Secret Garden"
+  },
+  {
+    "name": "Olaria",
+    "groupTypeId": 1,
+    "address": "Rua Filomena Nunes, 283, Olaria",
+    "lideres": [
+      "ricado",
+      "flavia"
+    ],
+    "data": {
+      "dia": 6,
+      "hora": "20h30"
+    },
+    "complement": ""
+  },
+  {
+    "name": "Barra Village",
+    "groupTypeId": 1,
+    "address": "Avenida César Morani, 500",
+    "lideres": [
+      "daniel",
+      "louise"
+    ],
+    "data": {
+      "dia": 6,
+      "hora": "20h30"
+    },
+    "complement": "Condomínio Barra Village House Life"
   }
 ]

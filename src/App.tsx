@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import SwitchRoute from "./shared/components/switch_route/SwitchRoute";
+import SwitchRoute from "./shared/components/switch-route/SwitchRoute";
 import Navigation from "./shared/components/navigation/Navigation";
 
 function App() {
