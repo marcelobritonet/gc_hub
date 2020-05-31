@@ -7,6 +7,7 @@ import SwitchRoute from "./shared/components/switch-route/SwitchRoute";
 import Navigation from "./shared/components/navigation/Navigation";
 
 function App() {
+    // TODO CONVERTER EM PWA
   return (
       <Router>
         <div>

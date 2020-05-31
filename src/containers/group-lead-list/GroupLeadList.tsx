@@ -6,6 +6,7 @@ import {IGroupLead} from "../../shared/services/group/group.models";
 import {Link} from "react-router-dom";
 
 function GroupLeadList() {
+    // TODO: LISTAR OS GCS DE CADA LIDER
     const [leadGroupList, setLeadGroupList] = useState<IGroupLead[] | undefined>(undefined);
 
     useEffect(() => {

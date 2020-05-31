@@ -1,4 +1,4 @@
-import {ITraficModeOptions, ITransitModeOptions} from "./maps.models";
+import {ITraficModeOptions, ITransitModeOptions} from "./find-destination.models";
 
 const traficModes: ITraficModeOptions[] = [
     {

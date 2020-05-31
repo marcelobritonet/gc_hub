@@ -1,13 +1,13 @@
 import React from 'react';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import Maps from "../../shared/components/maps/Maps";
+import FindDestination from "../../shared/components/find-destination/FindDestination";
 
 function MyGroup() {
     return (
         <div>
             <h2>Meu Grupo</h2>
-            <Maps/>
+            <FindDestination/>
         </div>
     )
 }

@@ -4,8 +4,8 @@ import {
     orderDistanceListByDuration,
     orderDistanceListByFare
 } from '../../services/google-maps-plataform/google-maps-plataform.service';
-import {ITraficModeOptions, ITransitModeOptions} from "./maps.models";
-import {traficModes, transitModes} from "./maps.service";
+import {ITraficModeOptions, ITransitModeOptions} from "./find-destination.models";
+import {traficModes, transitModes} from "./find-destination.service";
 import {
     IDistanceMatrix,
     IDistanceMatrixParametres, ITraficMode,
@@ -15,9 +15,10 @@ import {CEP_REGEX} from "../../constants/constants";
 import {getDistanceMatrix} from "../../services/google-maps-plataform/google-maps-plataform.api";
 import {getAddessByCep} from "../../services/viacep/viacep.api";
 import {IAddress} from "../../services/viacep/viacep.models";
-import MapDistanceList from "../map-distance-list/MapDistanceList";
+import DestinationList from "./destination-list/DestinationList";
 
-function Maps() {
+function FindDestination() {
+    // TODO: OBTER CEP DA API DO NAVEGADOR
     const traficModeSelect = useRef(null);
     const transitModeSelect = useRef(null);
     const originCepInput = useRef(null);
@@ -99,8 +100,6 @@ function Maps() {
     }, [sortBy, originCep, traficMode, transitMode]);
 
     return <div>
-        <h2>Maps</h2>
-
         <label>
             Meu CEP:
             <input type="text"
@@ -188,9 +187,9 @@ function Maps() {
             >O mais barato</button>
         }
 
-        <MapDistanceList distance={distance}/>
+        <DestinationList distance={distance}/>
     </div>
 }
 
 
-export default Maps;
+export default FindDestination;

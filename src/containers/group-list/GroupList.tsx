@@ -5,6 +5,11 @@ import {IGroup, IGroupLead} from "../../shared/services/group/group.models";
 import {getGroupList} from "../../shared/services/group/group.service";
 
 function GroupList() {
+    // TODO: LISTAR OS LIDERES DE CADA GC
+    // TODO: MONTAR A DATA DO ENCONTRO
+    // TODO: ORDENAR POR DATA DE ENCONTRO
+    // TODO: ORDENAR POR "PROXIMO ENCONTRO"
+    // TODO: FILTRAR POR "groupName"
     const [groupList, setGroupList] = useState<IGroup[] | undefined>();
 
     useEffect(() => {

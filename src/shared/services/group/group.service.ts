@@ -39,6 +39,7 @@ function buildGroupList(list: IGroupResponse[]): IGroup[] {
 }
 
 function buildGroupItem(item: IGroupResponse): IGroup {
+    // TODO: POSSIBIILIDADE DE TER MAIS DE UM ENCONTRO POR GRUPO
     const { name, address, complement } = item;
 
     return {

@@ -1,11 +1,11 @@
 import React from "react";
-import {IDistanceMatrix} from "../../services/google-maps-plataform/google-maps-plataform.models";
+import {IDistanceMatrix} from "../../../services/google-maps-plataform/google-maps-plataform.models";
 
-interface IMapDistanceList {
+interface IDestinationList {
     distance: IDistanceMatrix[] | undefined;
 }
 
-function MapDistanceList(prop: IMapDistanceList) {
+function DestinationList(prop: IDestinationList) {
     const { distance } = prop;
 
     return (
@@ -25,4 +25,4 @@ function MapDistanceList(prop: IMapDistanceList) {
     )
 }
 
-export default MapDistanceList;
+export default DestinationList;
