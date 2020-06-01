@@ -30,7 +30,7 @@ async function getGroupList(): Promise<IGroup[]> {
         const data: IGroupResponse[] = await response.json();
         const leads: IGroupLead[] = await getGroupLeadList();
         const list: IGroup[] = buildGroupList(data, leads);
-        // SessionStorage.set(GROUP_LIST_STORAGE_KEY, list);
+        SessionStorage.set(GROUP_LIST_STORAGE_KEY, list);
         return list;
     }
 }
@@ -60,7 +60,6 @@ function buildGroupItem(item: IGroupResponse, allGroupLeads: IGroupLead[]): IGro
             phone: '21 9999 9999',
             alias: 'alilas',
         }],
-        // groupLeads: groupLeads,
         reunion: 'sexta 20h30',
         complement: item.complement
     };
