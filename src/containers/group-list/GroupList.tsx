@@ -3,6 +3,7 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {IGroup, IGroupLead} from "../../shared/services/group/group.models";
 import {getGroupList} from "../../shared/services/group/group.service";
+import styled from "styled-components";
 
 function GroupList() {
     // TODO: LISTAR OS LIDERES DE CADA GC
@@ -22,27 +23,47 @@ function GroupList() {
     };
 
     return (
-        <div>
-            <h2>Grupos de Crescimento</h2>
-            <ul>
+        <Wrapper>
+            <PageTitle>Grupos de Crescimento</PageTitle>
+            <List>
                 {
                     groupList && groupList.map((list: IGroup, index: number) =>
-                        <li key={index}>
-                            <p>{list.name} - {list.groupName}</p>
-                            <p>{list.address}</p>
-                            <p>{ list.complement }</p>
-                            { list.teamLead.map((lead: IGroupLead, index: number) =>
-                                <p key={index}>{ lead.alias } / { lead.nome } / { lead.phone }</p>
-                            )}
-                            <p>{ list.data }</p>
-                        </li>
+                        <Group key={index}>
+                            <Title>{list.name} - {list.groupName}</Title>
+                            <Reunion>{ list.reunion }</Reunion>
+                            <Address>{list.address} <br/>{ list.complement }</Address>
+                            <Leads>
+                                { list.groupLeads.map((lead: IGroupLead, index: number) =>
+                                    <Lead key={index}>{ lead.alias } / { lead.nome } / { lead.phone }</Lead>
+                                )}
+                            </Leads>
+
+                        </Group>
                     )
                 }
-            </ul>
-        </div>
+            </List>`
+        </Wrapper>
 
     )
 }
+
+const Wrapper = styled.div``;
+
+const PageTitle = styled.h2``;
+
+const List = styled.ul``;
+
+const Group = styled.li``;
+
+const Title = styled.h3``;
+
+const Address = styled.p``;
+
+const Leads = styled.ul``;
+
+const Lead = styled.li``;
+
+const Reunion = styled.span``;
 
 const mapDispatchToProps = (dispatch: any) =>
     bindActionCreators({

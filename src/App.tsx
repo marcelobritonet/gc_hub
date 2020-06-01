@@ -19,8 +19,7 @@ function App() {
   );
 }
 
-const Title = styled.div`
-    font-size: 20px
+const Title = styled.h1`
 `;
 
 const mapDispatchToProps = (dispatch: any) =>

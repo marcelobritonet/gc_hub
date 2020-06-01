@@ -8,8 +8,8 @@ export interface IGroup {
     name: string;
     groupName: string;
     address: string;
-    teamLead: IGroupLead[];
-    data: string;
+    groupLeads: IGroupLead[];
+    reunion: string;
     complement: string;
 }
 
@@ -18,7 +18,7 @@ export interface IGroupResponse {
     groupTypeId: number;
     groupName: string;
     address: string;
-    teamLead: string[];
+    groupLeads: string[];
     data: Data;
     complement: string;
 }

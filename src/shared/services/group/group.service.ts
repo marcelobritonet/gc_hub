@@ -28,31 +28,41 @@ async function getGroupList(): Promise<IGroup[]> {
     } else {
         const response: Response = await fetch('./data/grupos.json');
         const data: IGroupResponse[] = await response.json();
-        const list = buildGroupList(data);
-        SessionStorage.set(GROUP_LIST_STORAGE_KEY, list);
+        const leads: IGroupLead[] = await getGroupLeadList();
+        const list: IGroup[] = buildGroupList(data, leads);
+        // SessionStorage.set(GROUP_LIST_STORAGE_KEY, list);
         return list;
     }
 }
 
-function buildGroupList(list: IGroupResponse[]): IGroup[] {
-    return list.map(item => buildGroupItem(item));
+function buildGroupList(list: IGroupResponse[], leads: IGroupLead[]): IGroup[] {
+    return list.map(item => buildGroupItem(item, leads));
 }
 
-function buildGroupItem(item: IGroupResponse): IGroup {
+function buildGroupItem(item: IGroupResponse, allGroupLeads: IGroupLead[]): IGroup {
     // TODO: POSSIBIILIDADE DE TER MAIS DE UM ENCONTRO POR GRUPO
-    const { name, address, complement } = item;
+    // TODO: REMOVER MOCK DE `groupLeads`
+    const groupLeads = item.groupLeads
+        .map((_groupLeads: string) =>
+            allGroupLeads.find((_groupLead: IGroupLead) =>
+                _groupLead.alias === _groupLeads
+            )
+        )
+    ;
 
+    console.log(groupLeads)
     return {
-        name: name,
+        name: item.name,
         groupName: GroupType[item.groupTypeId],
-        address: address,
-        teamLead: [{
+        address: item.address,
+        groupLeads: [{
             nome: 'lider',
             phone: '21 9999 9999',
             alias: 'alilas',
         }],
-        data: 'sexta 20h30',
-        complement: complement
+        // groupLeads: groupLeads,
+        reunion: 'sexta 20h30',
+        complement: item.complement
     };
 }
 

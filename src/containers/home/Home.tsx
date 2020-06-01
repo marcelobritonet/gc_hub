@@ -2,16 +2,19 @@ import React from 'react';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import styled from "styled-components";
 
 function Home() {
     return (
         <div>
-            <h2>Grupo de Crescimento</h2>
-            <p>Seja bem vindo. Conheça o seu Grupo de Conhecimento personalizado pra você.</p>
-            <Link to="/meugrupo">Quero conhecer agora</Link>
+            <Title>Grupos de Crescimento Lagoinha Barra</Title>
+            <Link to="/meugrupo">Quero conhecer o meu GC</Link>
         </div>
     )
 }
+
+const Title = styled.h2`
+`;
 
 const mapDispatchToProps = (dispatch: any) =>
     bindActionCreators({

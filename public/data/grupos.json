@@ -3,7 +3,7 @@
     "name": "Recreio",
     "groupTypeId": 1,
     "address": "Estrada Benvindo de Novaes, 2800",
-    "lideres": [
+    "groupLeads": [
       "joao",
       "cibele"
     ],
@@ -17,7 +17,7 @@
     "name": "Posto 6",
     "groupTypeId": 1,
     "address": "Avenida Lúcio Costa, 4420",
-    "lideres": [
+    "groupLeads": [
       "israel"
     ],
     "data": {
@@ -30,7 +30,7 @@
     "name": "Leblon",
     "groupTypeId": 1,
     "address": "Rua Humberto de Campos, 410 - Leblon",
-    "lideres": [
+    "groupLeads": [
       "iris",
       "mylene"
     ],
@@ -44,7 +44,7 @@
     "name": "Taquara",
     "groupTypeId": 1,
     "address": "Rua Marapendi, 660",
-    "lideres": [
+    "groupLeads": [
       "jessica",
       "eduardo"
     ],
@@ -58,9 +58,9 @@
     "name": "Olaria",
     "groupTypeId": 1,
     "address": "Rua Filomena Nunes, 283, Olaria",
-    "lideres": [
-      "ricado",
-      "flavia"
+    "groupLeads": [
+      "ricardo",
+      "flavia_"
     ],
     "data": {
       "dia": 6,
@@ -72,7 +72,7 @@
     "name": "Barra Village",
     "groupTypeId": 1,
     "address": "Avenida César Morani, 500",
-    "lideres": [
+    "groupLeads": [
       "daniel",
       "louise"
     ],

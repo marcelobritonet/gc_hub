@@ -20,10 +20,11 @@ function GroupLead() {
 
     return <div>
         { lead &&
-            <div>
-                <p>{lead.nome}</p>
-                <p>{lead.phone}</p>
-            </div>
+            <ul>
+                <li>
+                    <p>{lead.nome} - {lead.phone}</p>
+                </li>
+            </ul>
         }
         <Link to="/lideres">Voltar</Link>
     </div>
