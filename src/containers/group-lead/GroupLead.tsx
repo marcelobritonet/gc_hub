@@ -26,7 +26,6 @@ function GroupLead() {
                 </li>
             </ul>
         }
-        <Link to="/lideres">Voltar</Link>
     </div>
 }
 

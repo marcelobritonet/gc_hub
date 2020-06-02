@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {IGroup, IGroupLead} from "../../shared/services/group/group.models";
 import {getGroupList} from "../../shared/services/group/group.service";
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 function GroupList() {
     // TODO: LISTAR OS LIDERES DE CADA GC
@@ -29,12 +30,14 @@ function GroupList() {
                 {
                     groupList && groupList.map((list: IGroup, index: number) =>
                         <Group key={index}>
-                            <Title>{list.name} - {list.groupName}</Title>
+                            <Title>{list.name} | {list.groupName}</Title>
                             <Reunion>{ list.reunion }</Reunion>
                             <Address>{list.address} <br/>{ list.complement }</Address>
                             <Leads>
                                 { list.groupLeads.map((lead: IGroupLead, index: number) =>
-                                    <Lead key={index}>{ lead.alias } / { lead.nome } / { lead.phone }</Lead>
+                                    <Lead key={index}>
+                                        <Link to={`lider/${lead.alias}`}>{lead.nome}</Link> - {lead.phone}
+                                    </Lead>
                                 )}
                             </Leads>
 

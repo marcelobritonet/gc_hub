@@ -18,6 +18,7 @@ import {IAddress} from "../../services/viacep/viacep.models";
 import DestinationList from "./destination-list/DestinationList";
 
 function FindDestination() {
+    // TODO: TRATAR CEP INEXISTENTE / NÃO ENCONTRADO
     // TODO: OBTER CEP DA API DO NAVEGADOR
     const traficModeSelect = useRef(null);
     const transitModeSelect = useRef(null);

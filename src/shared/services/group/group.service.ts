@@ -40,26 +40,23 @@ function buildGroupList(list: IGroupResponse[], leads: IGroupLead[]): IGroup[] {
 }
 
 function buildGroupItem(item: IGroupResponse, allGroupLeads: IGroupLead[]): IGroup {
+    // TODO: BUILDAR REUNION
     // TODO: POSSIBIILIDADE DE TER MAIS DE UM ENCONTRO POR GRUPO
-    // TODO: REMOVER MOCK DE `groupLeads`
-    const groupLeads = item.groupLeads
-        .map((_groupLeads: string) =>
-            allGroupLeads.find((_groupLead: IGroupLead) =>
-                _groupLead.alias === _groupLeads
-            )
+    const reducer = (accumulator: IGroupLead[], currentValue: string): IGroupLead[] => {
+        const lead: IGroupLead | undefined = allGroupLeads.find((_groupLead: IGroupLead) =>
+            _groupLead.alias === currentValue
         )
-    ;
 
-    console.log(groupLeads)
+        return lead
+            ? [...accumulator, lead]
+            : accumulator
+    }
+
     return {
         name: item.name,
         groupName: GroupType[item.groupTypeId],
         address: item.address,
-        groupLeads: [{
-            nome: 'lider',
-            phone: '21 9999 9999',
-            alias: 'alilas',
-        }],
+        groupLeads: item.groupLeads.reduce(reducer, []),
         reunion: 'sexta 20h30',
         complement: item.complement
     };
