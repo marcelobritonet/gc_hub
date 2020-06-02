@@ -4,7 +4,6 @@ import {
     IDistanceMatrixParametresRequest,
     IDistanceMatrixResponse
 } from "./google-maps-plataform.models";
-import {GOOGLE_MAPS_PLATAFORM_API_KEY, PROXY_URL} from "./google-maps-plataform.constants";
 import {cleanEmptyPropetiesFromObjects, serialize} from "../util/util.service";
 import {buildDistanceList} from "./google-maps-plataform.service";
 import {IGroup} from "../group/group.models";
@@ -16,8 +15,10 @@ async function getDistanceMatrix(distanceParams: IDistanceMatrixParametres): Pro
     const address: string[] = await getDestinationAddress();
     const destinations: string = buildUrlDestinationParams(address);
     const origins: string = buildUrlOriginsParams(params);
-    const queryString: string = buildUrlQueryString(params, GOOGLE_MAPS_PLATAFORM_API_KEY);
-    const url: string = `${PROXY_URL}https://maps.googleapis.com/maps/api/distancematrix/json?${queryString}${origins}${destinations}`;
+    //https://console.developers.google.com/apis/dashboard?project=still-tensor-271919
+    const googleMapsPlataformApiKey = process.env.REACT_APP_GOOGLE_MAPS_PLATAFORM_API_KEY || '';
+    const queryString: string = buildUrlQueryString(params, googleMapsPlataformApiKey);
+    const url: string = `${process.env.REACT_APP_PROXY_URL}https://maps.googleapis.com/maps/api/distancematrix/json?${queryString}${origins}${destinations}`;
     return await fetchDistanceMatrix(url, address);
 }
 
