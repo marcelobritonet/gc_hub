@@ -18,7 +18,7 @@ import {getAddessByCep} from "../../../services/viacep/viacep.api";
 import {CEP_REGEX} from "../../../constants/constants";
 
 interface IFindDestinationForm {
-    setDistance:  React.Dispatch<React.SetStateAction<any>>
+    setDistance:  React.Dispatch<React.SetStateAction<IDistanceMatrix[]>>
 }
 
 function FindDestinationForm(prop: IFindDestinationForm) {
@@ -39,7 +39,7 @@ function FindDestinationForm(prop: IFindDestinationForm) {
     const [loading, setLoading] = useState<boolean>(false)
 
     const getDistance = async () => {
-        setDistance(undefined);
+        setDistance([]);
         setLoading(true);
 
         const params: IDistanceMatrixParametres = {
