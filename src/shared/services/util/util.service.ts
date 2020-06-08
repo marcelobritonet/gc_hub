@@ -10,6 +10,22 @@ const serialize = (obj: any = {}) => {
     return str.join('&');
 };
 
+function compose(...fns: Function[]) {
+    const reducer = async (acc: any, fn: Function) => {
+        const x = await acc;
+
+        if (fn.constructor.name == 'AsyncFunction') {
+            return await fn(x)
+        } else {
+            return fn(x)
+        }
+    }
+
+    return function (value: any) {
+        return fns.reduce(reducer, value);
+    }
+}
+
 //
 // function paramsToObject(params): object {
 //     const urlParams = new URLSearchParams(params);
@@ -73,6 +89,7 @@ function cleanEmptyPropetiesFromObjects(obj: any) {
 
 export {
     serialize,
+    compose,
     // paramsToObject,
     cleanEmptyPropetiesFromObjects,
     // extractHtmlTags,

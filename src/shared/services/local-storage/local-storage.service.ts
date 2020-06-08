@@ -1,5 +1,6 @@
 function set(key: string, data: any) {
     localStorage.setItem(key, JSON.stringify(data));
+    return data;
 }
 
 function get(key: string): any {

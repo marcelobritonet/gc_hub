@@ -1,4 +1,7 @@
 import {ITraficModeOptions, ITransitModeOptions} from "./find-destination.models";
+import LocalStorage from '../../services/local-storage/local-storage.service';
+
+const ZIP_CODE_KEY_STORAGE = 'zip-code';
 
 const traficModes: ITraficModeOptions[] = [
     {
@@ -29,7 +32,12 @@ const transitModes: ITransitModeOptions[] = [
     },
 ];
 
+function persistLocallyZipCode(zipCode: string) {
+    return LocalStorage.set(ZIP_CODE_KEY_STORAGE, zipCode);
+}
+
 export {
+    persistLocallyZipCode,
     traficModes,
     transitModes
 }

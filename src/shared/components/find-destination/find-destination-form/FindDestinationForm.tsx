@@ -1,5 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
-import {traficModes, transitModes} from "../find-destination.service";
+import {
+    persistLocallyZipCode,
+    traficModes,
+    transitModes
+} from "../find-destination.service";
 import {ITraficModeOptions, ITransitModeOptions} from "../find-destination.models";
 import {IAddress} from "../../../services/viacep/viacep.models";
 import {
@@ -16,6 +20,8 @@ import {
 } from "../../../services/google-maps-plataform/google-maps-plataform.service";
 import {getAddessByCep} from "../../../services/viacep/viacep.api";
 import {CEP_REGEX} from "../../../constants/constants";
+import {TextField, Select, RadioGroup, FormControlLabel, Radio} from "@material-ui/core";
+import {compose} from "../../../services/util/util.service";
 
 interface IFindDestinationForm {
     setDistance:  React.Dispatch<React.SetStateAction<IDistanceMatrix[]>>
@@ -35,7 +41,7 @@ function FindDestinationForm(prop: IFindDestinationForm) {
     const [address, setAddress] = useState<IAddress | undefined>();
     const [traficMode, setTraficMode] = useState<ITraficMode>();
     const [transitMode, setTransitMode] = useState<ITransitMode>();
-    const [sortBy, setSortBy] = useState<'nearest' | 'faster' | 'cheap' | undefined>();
+    const [sortBy, setSortBy] = useState<'nearest' | 'faster' | 'cheap' | undefined>('nearest');
     const [loading, setLoading] = useState<boolean>(false)
 
     const getDistance = async () => {
@@ -68,8 +74,13 @@ function FindDestinationForm(prop: IFindDestinationForm) {
     };
 
     const getAddress = async (cep: string) => {
-        const address = cep ? await getAddessByCep(cep) : undefined;
-        await setAddress(address)
+        const getAddressComposition = compose(
+            persistLocallyZipCode,
+            getAddessByCep
+        )
+
+        const address = await getAddressComposition(cep)
+        setAddress(address)
     };
 
     const handleOriginCep = () => {
@@ -89,6 +100,11 @@ function FindDestinationForm(prop: IFindDestinationForm) {
         setTransitMode(transitModeSelect.current.value);
     };
 
+    const handleSortBy = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // @ts-ignore-next-line
+        setSortBy((event.target as HTMLInputElement).value)
+    }
+
     useEffect(() => {
         handleTraficMode();
         getAddress(originCep);
@@ -106,94 +122,66 @@ function FindDestinationForm(prop: IFindDestinationForm) {
         originCep && sortBy && getDistance();
     }, [sortBy, originCep, traficMode, transitMode]);
 
-
     return <div>
-        <label>
-            Meu CEP:
-            <input type="text"
-                   ref={originCepInput}
-                   onKeyUp={handleOriginCep}
-                   disabled={loading}
-            />
-        </label>
+        <TextField
+            id="standard-basic"
+            label="CEP"
+            onKeyUp={handleOriginCep}
+            inputRef={originCepInput}
+        />
 
-        {
-            address &&
-            <div>
-                <p>{address.cep}</p>
-                <p>{address.logradouro}</p>
-                <p>{address.complemento}</p>
-                <p>{address.bairro}</p>
-                <p>{address.localidade}</p>
-                <p>{address.uf}</p>
-            </div>
+        { address &&
+        <div>
+            <p>{address.logradouro} {address.complemento} {address.bairro}, {address.cep}</p>
+            <p>{address.localidade}, {address.uf}</p>
+        </div>
         }
 
         <br/>
 
-        <label>
-            Pretendo ir:
-            <select name="" id=""
-                    ref={traficModeSelect}
-                    onChange={handleTraficMode}
-                    disabled={loading}
-            >
-                {
-                    traficModes.map((mode: ITraficModeOptions, index: number) =>
-                        <option
-                            key={index}
-                            value={mode.mode}
-                        >{mode.label}</option>
-                    )
-                }
-            </select>
-        </label>
+        <Select
+            native
+            value={traficMode}
+            onChange={handleTraficMode}
+            inputRef={traficModeSelect}
+        >
+            { traficModes.map((mode: ITraficModeOptions, index: number) =>
+                <option
+                    key={index}
+                    value={mode.mode}
+                >{mode.label}</option>
+            )}
+        </Select>
 
         <br/>
 
-        {
-            traficMode === 'transit' && <label>
-                Meio de transporte preferencial:
-                <select name="" id=""
-                        ref={transitModeSelect}
-                        onChange={handelTransitMode}
-                        disabled={loading}
-                >
-                    {
-                        transitModes.map((mode: ITransitModeOptions, index: number) =>
-                            <option
-                                key={index}
-                                value={mode.mode}
-                            >{mode.label}</option>
-                        )
-                    }
-                </select>
-            </label>
+        {traficMode === 'transit' &&
+        <Select
+            native
+            value={transitMode}
+            onChange={handelTransitMode}
+            inputRef={transitModeSelect}
+            disabled={loading}
+        >
+            { transitModes.map((mode: ITransitModeOptions, index: number) =>
+            <option
+                key={index}
+                value={mode.mode}
+            >{mode.label}</option>
+            )}
+        </Select>
         }
 
-        <br/>
-
-        <button
-            onClick={() => setSortBy('nearest')}
-            disabled={!originCep || loading}
-        >Encontre o mais próximo próximo</button>
-
-        <br/>
-
-        <button
-            onClick={() => setSortBy('faster')}
-            disabled={!originCep || loading}
-        >Encontre o mais rápido para chegar</button>
-
-        <br/>
-
-        {
-            transitMode &&
-            <button
-                onClick={() => setSortBy('cheap')}
-                disabled={!originCep || loading}
-            >O mais barato</button>
-        }
+        <RadioGroup
+            onChange={handleSortBy}
+            value={sortBy}
+        >
+            <FormControlLabel value="nearest" control={<Radio />} label="Mais próximo" />
+            <FormControlLabel value="faster" control={<Radio />} label="Mais rápido" />
+            { transitMode &&
+            <FormControlLabel value="cheap" control={<Radio />} label="Mais barato" />
+            }
+        </RadioGroup>
     </div>
 }
 

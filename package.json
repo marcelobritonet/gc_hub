@@ -3,6 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.10.1",
+    "@material-ui/icons": "^4.9.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "styled-components": "^5.0.1",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^10.0.4",
     "@testing-library/user-event": "^7.1.2",
@@ -13,13 +24,10 @@
     "@types/react-redux": "^7.1.7",
     "@types/react-router-dom": "^5.1.3",
     "@types/styled-components": "^5.0.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
-    "redux": "^4.0.5",
-    "styled-components": "^5.0.1",
-    "typescript": "^3.8.3"
+    "gh-pages": "^2.2.0",
+    "react-redux": "^7.2.0",
+    "serve": "^11.3.0",
+    "typescript-plugin-styled-components": "^1.4.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,11 +59,5 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
-  },
-  "devDependencies": {
-    "gh-pages": "^2.2.0",
-    "react-redux": "^7.2.0",
-    "serve": "^11.3.0",
-    "typescript-plugin-styled-components": "^1.4.4"
   }
 }

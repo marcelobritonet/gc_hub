@@ -8,3 +8,4 @@ export enum GroupType {
 }
 
 export const CEP_REGEX = /[0-9]{5}[\d]{3}/g;
+export const CEP_RAW_REGEX = /[0-9]{8}/g;
