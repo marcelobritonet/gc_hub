@@ -1,5 +1,5 @@
 import React from "react";
-import {IDistanceMatrix} from "../../../services/google-maps-plataform/google-maps-plataform.models";
+import {IDistanceMatrix} from "../../../services/distance-matrix/distance-matrix.models";
 
 interface IDestinationList {
     distance: IDistanceMatrix[] | undefined;

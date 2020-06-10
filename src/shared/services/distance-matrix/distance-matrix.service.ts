@@ -1,7 +1,7 @@
 import {
     IDistanceMatrix,
     IDistanceMatrixResponse
-} from "./google-maps-plataform.models";
+} from "./distance-matrix.models";
 
 function buildDistanceList(list: IDistanceMatrixResponse, destinations: string[]): IDistanceMatrix[] {
     return list.destination_addresses

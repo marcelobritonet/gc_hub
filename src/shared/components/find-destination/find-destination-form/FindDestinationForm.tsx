@@ -1,35 +1,28 @@
 import React, {useEffect, useRef, useState} from "react";
-import {
-    persistLocallyZipCode,
-    traficModes,
-    transitModes
-} from "../find-destination.service";
-import {ITraficModeOptions, ITransitModeOptions} from "../find-destination.models";
+import {getDestinationAddress, persistZipCode, getDistanceMatrix, getAddessByCep} from "../find-destination.service";
+import {IFindDestinationForm, ITraficModeOptions, ITransitModeOptions} from "../find-destination.models";
 import {IAddress} from "../../../services/viacep/viacep.models";
 import {
     IDistanceMatrix,
-    IDistanceMatrixParametres,
+    IDistanceMatrixParametres, IDistanceMatrixResponse,
     ITraficMode,
     ITransitMode
-} from "../../../services/google-maps-plataform/google-maps-plataform.models";
-import {getDistanceMatrix} from "../../../services/google-maps-plataform/google-maps-plataform.api";
+} from "../../../services/distance-matrix/distance-matrix.models";
 import {
+    buildDistanceList,
     orderDistanceListByDistance,
     orderDistanceListByDuration,
     orderDistanceListByFare
-} from "../../../services/google-maps-plataform/google-maps-plataform.service";
-import {getAddessByCep} from "../../../services/viacep/viacep.api";
+} from "../../../services/distance-matrix/distance-matrix.service";
 import {CEP_REGEX} from "../../../constants/constants";
-import {TextField, Select, RadioGroup, FormControlLabel, Radio} from "@material-ui/core";
+import {TextField, Select, RadioGroup, FormControlLabel, Radio, Button} from "@material-ui/core";
 import {compose} from "../../../services/util/util.service";
-
-interface IFindDestinationForm {
-    setDistance:  React.Dispatch<React.SetStateAction<IDistanceMatrix[]>>
-}
+import {traficModes, transitModes} from "../find-destination.constants";
 
 function FindDestinationForm(prop: IFindDestinationForm) {
     // TODO: TRATAR CEP INEXISTENTE / NÃO ENCONTRADO
     // TODO: OBTER CEP DA API DO NAVEGADOR
+    // TODO: BUG NA TROCA DE CEP
 
     const { setDistance } = prop;
 
@@ -54,7 +47,9 @@ function FindDestinationForm(prop: IFindDestinationForm) {
             transit_mode: transitMode
         };
 
-        const addressList: IDistanceMatrix[] | [] = await getDistanceMatrix(params);
+        const address: string[] = await getDestinationAddress();
+        const response: IDistanceMatrixResponse = await getDistanceMatrix(params, address);
+        const addressList: IDistanceMatrix[] = buildDistanceList(response, address);
 
         switch (sortBy) {
             case 'faster':
@@ -75,7 +70,7 @@ function FindDestinationForm(prop: IFindDestinationForm) {
 
     const getAddress = async (cep: string) => {
         const getAddressComposition = compose(
-            persistLocallyZipCode,
+            persistZipCode,
             getAddessByCep
         )
 
@@ -117,10 +112,6 @@ function FindDestinationForm(prop: IFindDestinationForm) {
             setTransitMode(undefined)
         }
     }, [traficMode]);
-
-    useEffect(() => {
-        originCep && sortBy && getDistance();
-    }, [sortBy, originCep, traficMode, transitMode]);
 
     return <div>
         <TextField
@@ -182,6 +173,11 @@ function FindDestinationForm(prop: IFindDestinationForm) {
             <FormControlLabel value="cheap" control={<Radio />} label="Mais barato" />
             }
         </RadioGroup>
+
+        <Button
+            disabled={!originCep || !sortBy}
+            onClick={() => getDistance()}
+        >Buscar</Button>
     </div>
 }
 

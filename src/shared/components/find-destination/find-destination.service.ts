@@ -1,43 +1,55 @@
-import {ITraficModeOptions, ITransitModeOptions} from "./find-destination.models";
-import LocalStorage from '../../services/local-storage/local-storage.service';
+import {set} from '../../services/local-storage/local-storage.service';
+import {IAddress} from "../../services/viacep/viacep.models";
+import {buildUrl as buildAddressByCepApiUrl, fetchAddessByCep} from "../../services/viacep/viacep.api";
+import {cacheRequest, retrieveCache} from "../../services/local-cache/local-cache";
+import {
+    IDistanceMatrixParametres,
+    IDistanceMatrixResponse
+} from "../../services/distance-matrix/distance-matrix.models";
+import {buildApiUrl, fetchDistanceMatrix} from "../../services/distance-matrix/distance-matrix.api";
+import {IGroup} from "../../services/group/group.models";
+import {getGroupList} from "../../services/group/group.service";
 
 const ZIP_CODE_KEY_STORAGE = 'zip-code';
 
-const traficModes: ITraficModeOptions[] = [
-    {
-        label: 'Dirigindo',
-        mode: 'driving'
-    }, {
-        label: 'Andando',
-        mode: 'walking'
-    }, {
-        label: 'Pedalando',
-        mode: 'bicycling'
-    }, {
-        label: 'Transporte Público',
-        mode: 'transit'
+function persistZipCode(zipCode: string) {
+    return set(ZIP_CODE_KEY_STORAGE, zipCode);
+}
+
+async function getAddessByCep(cep: string): Promise<IAddress | null> {
+    const url = buildAddressByCepApiUrl(cep);
+    const cache = retrieveCache(url);
+
+    if(cache) {
+        return cache;
+    } else {
+        const response = await fetchAddessByCep(cep)
+        cacheRequest(url, response);
+        return response;
     }
-];
+}
 
-const transitModes: ITransitModeOptions[] = [
-    {
-        label: 'Ônibus',
-        mode: 'bus'
-    }, {
-        label: 'Metrô',
-        mode: 'subway'
-    }, {
-        label: 'Trem',
-        mode: 'train'
-    },
-];
+async function getDistanceMatrix(distanceParams: IDistanceMatrixParametres, address: string[]): Promise<IDistanceMatrixResponse> {
+    const url = buildApiUrl(distanceParams, address)
+    const cache = retrieveCache(url);
 
-function persistLocallyZipCode(zipCode: string) {
-    return LocalStorage.set(ZIP_CODE_KEY_STORAGE, zipCode);
+    if(cache) {
+        return await cache;
+    } else {
+        const data = await fetchDistanceMatrix(distanceParams, address);
+        cacheRequest(url, data);
+        return data;
+    }
+}
+
+async function getDestinationAddress(): Promise<string[]> {
+    const groups: IGroup[] = await getGroupList();
+    return groups.map(group => group.address);
 }
 
 export {
-    persistLocallyZipCode,
-    traficModes,
-    transitModes
+    getDestinationAddress,
+    getDistanceMatrix,
+    getAddessByCep,
+    persistZipCode
 }

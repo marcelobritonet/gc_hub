@@ -8,7 +8,7 @@ function get(key: string): any {
     return item ? JSON.parse(item): undefined;
 }
 
-export default {
+export {
     set,
     get
 }

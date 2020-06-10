@@ -2,9 +2,12 @@ import {IGroup, IGroupLead, IGroupResponse} from "./group.models";
 import {GroupType} from "../../constants/constants";
 import SessionStorage from '../session-storage/session-storage.service'
 
+const LEAD_LOCAL_STORAGE_KEY = 'lead_list';
+const GROUP_LIST_STORAGE_KEY = 'group_list';
+
 async function getGroupLeadList(): Promise<IGroupLead[]> {
-    const LEAD_LOCAL_STORAGE_KEY = 'lead_list'
     const storaged = SessionStorage.get(LEAD_LOCAL_STORAGE_KEY);
+
     if (storaged) {
         return await storaged;
     } else {
@@ -21,8 +24,8 @@ async function getLead(alias: string): Promise<IGroupLead | undefined> {
 }
 
 async function getGroupList(): Promise<IGroup[]> {
-    const GROUP_LIST_STORAGE_KEY = 'group_list';
     const storaged = SessionStorage.get(GROUP_LIST_STORAGE_KEY);
+
     if(storaged) {
         return await storaged;
     } else {
