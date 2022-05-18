@@ -43,8 +43,8 @@ function FindDestinationForm(prop: IFindDestinationForm) {
 
         const params: IDistanceMatrixParametres = {
             origins: [originCep],
-            mode: traficMode,
-            transit_mode: transitMode
+            // mode: traficMode,
+            // transit_mode: transitMode
         };
 
         const address: string[] = await getDestinationAddress();

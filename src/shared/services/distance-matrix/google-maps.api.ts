@@ -1,4 +1,5 @@
-//https://portal.distancematrixapi.com/dashboard
+//https://developers.google.com/maps/documentation/distance-matrix/intro?hl=pt-br
+//https://console.developers.google.com/apis/dashboard?project=still-tensor-271919
 
 import {
     IDistanceMatrixParametres,
@@ -11,7 +12,7 @@ function buildApiUrl(distanceParams: IDistanceMatrixParametres, address: string[
     const destinations: string = buildUrlDestinationParams(address);
     const origins: string = buildUrlOriginsParams(distanceParams);
     const queryString: string = buildUrlQueryString(distanceParams);
-    return `${process.env.REACT_APP_DISTANCE_MATRIX_API_URL}?${queryString}${destinations}`;
+    return `${process.env.REACT_APP_PROXY_URL}${process.env.REACT_APP_GOOGLE_MAPS_PLATAFORM_API_URL}?${queryString}${origins}${destinations}`;
 }
 
 function buildUrlDestinationParams(address: string[]): string {
@@ -26,7 +27,7 @@ function buildUrlOriginsParams(params: IDistanceMatrixParametres): string {
 
 function buildUrlQueryString(distanceParams: IDistanceMatrixParametres): string {
     const params:IDistanceMatrixParametres = cleanEmptyPropetiesFromObjects(distanceParams)
-    const googleMapsPlataformApiKey = process.env.REACT_APP_DISTANCE_MATRIX_API_KEY || '';
+    const googleMapsPlataformApiKey = process.env.REACT_APP_GOOGLE_MAPS_PLATAFORM_API_KEY || '';
     const requestParams: IDistanceMatrixParametresRequest = {
         ...params,
         key: googleMapsPlataformApiKey

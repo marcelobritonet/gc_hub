@@ -5,9 +5,9 @@ import FindDestination from "../../shared/components/find-destination/FindDestin
 
 function MyGroup() {
     return (
-        <div>
+        <>
             <FindDestination/>
-        </div>
+        </>
     )
 }
 
